@@ -23,7 +23,7 @@ var connecter=(config)=>{
             connection.config.queryFormat=function(query,values){
                 if(!values)return query;
                 return query.replace(/\:(\w+)/g,function (txt,key){
-                    return values.hasOwnProperty(key)?return mysqlCC.escape(values[key]):txt;
+                    return values.hasOwnProperty(key)?mysqlCC.escape(values[key]):txt;
                 }.bind(this));};
             var mysqlCC=secured(function(...ar){
                 for(var i=0;i<ar.length;i++){
@@ -49,8 +49,8 @@ var connecter=(config)=>{
             });
             mysqlCC.create=secured(connecter);
             mysqlCC.destroy=secured(()=>connection.destroy());
-            mysqlCC.set_secured(ccc=>secured=ccc);
-            mysqlCC.set_local_escape(ccc=>local_escape=ccc);
+            mysqlCC.set_secured=ccc=>secured=ccc;
+            mysqlCC.set_local_escape=ccc=>local_escape=ccc;
             return mysqlCC;
         });
 }
