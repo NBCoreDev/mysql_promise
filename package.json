@@ -1,14 +1,24 @@
 {
-  "dependencies": {
-    "mysql": "*",
+  "name": "mysql_promise",
+  "version": "0.0.2",
+  "main": "index.js",
+  "scripts": {
+    "test": "make test"
   },
-  "description": "Simply module for connect to mysql with promises",
-  "engines": {
-    "node": ">= 0.6"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/utyfua/mysql_promise.git"
   },
-  "files": [
-    "index.js"
+  "author": "Utyfua",
+  "keywords": [
+    "mysql",
+    "promises"
   ],
-  "homepage": "https://github.com/utyfua/mysql_promise",
-  "name": "mysql_promise"
+  "description": "Simply module for connect to mysql with promises",
+  "dependencies": {
+    "mysql": "^2.15.0"
+  },
+  "engines": {
+    "node":">=8.0.0"
+  }
 }

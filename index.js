@@ -1,20 +1,29 @@
 var Mysql=require('mysql');
-var escape=v=>{
-    return Mysql.escape(v);
-}
-var secured=q=>q;
 var connecter=(config)=>{
     var connection=Mysql.createConnection(config);
+    var tmp_wait;
+    connection.on('error', function(q) {
+        if(q.code==='PROTOCOL_CONNECTION_LOST'){
+            tmp_wait=[];
+            connection=Mysql.createConnection(config);
+            console.debug('mysql reconnect',q)
+            return connection.connect(err=>{
+                if(err)throw err;
+                tmp_wait.forEach(c=>c());
+                tmp_wait=null;
+            });
+        }
+        console.error('mysql global error',q)
+    });
+    var local_escape;
+    var secured=q=>q;
     return new Promise((c)=>connection.connect(c))
         .then(err=>{
             if(err)throw err;
             connection.config.queryFormat=function(query,values){
                 if(!values)return query;
                 return query.replace(/\:(\w+)/g,function (txt,key){
-                    if(values.hasOwnProperty(key)){
-                        return escape(values[key]);
-                    }
-                    return txt;
+                    return values.hasOwnProperty(key)?return mysqlCC.escape(values[key]):txt;
                 }.bind(this));};
             var mysqlCC=secured(function(...ar){
                 for(var i=0;i<ar.length;i++){
@@ -22,22 +31,27 @@ var connecter=(config)=>{
                         return connection.query(...ar)
                 }
                 return new Promise(resolve=>{
+                    if(tmp_wait)tmp_wait.push(resolve);
+                    else resolve();
+                }).then(()=>new Promise(resolve=>{
                     ar[ar.length]=(e,r,i)=>{
                         if(e)console.error('mysql',{e,i:{req:ar}})
                         if(!r)r=[];
                         //TODO: create prototype mysql response
-                        //r.__proto__.error=e;
-                        //r.__proto__.info=i;
                         return resolve(r)
                     }
                     connection.query(...ar)
-                });
+                }));
             });
-            mysqlCC.escape=mysqlCC.e=secured(escape);
+            mysqlCC.escape=mysqlCC.e=secured(v=>{
+                if(local_escape)v=local_escape(v);
+                return Mysql.escape(v);
+            });
             mysqlCC.create=secured(connecter);
             mysqlCC.destroy=secured(()=>connection.destroy());
+            mysqlCC.set_secured(ccc=>secured=ccc);
+            mysqlCC.set_local_escape(ccc=>local_escape=ccc);
             return mysqlCC;
-        })
-    
+        });
 }
 module.exports=connecter;
