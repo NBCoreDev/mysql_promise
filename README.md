@@ -47,4 +47,3 @@ See Mysql()
 Set function for hide internal code this module for any.
 ### mysql.set_local_escape(function)
 Add your function before standard escape.
-```
