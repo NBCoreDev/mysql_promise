@@ -6,23 +6,22 @@ npm i https://github.com/utyfua/mysql_promise --save
 
 ## Example
 ```javascript
-(async(){
-    var Mysql=require('mysql_promise');
-    var mysql=await Mysql({
-        "host":"127.0.0.1",
-        "user":"user",
-        "password":"password",
-        "database":"database"
-    });
+var Mysql=require('mysql_promise');
+var mysql=await Mysql({
+    "host":"127.0.0.1",
+    "user":"user",
+    "password":"password",
+    "database":"database"
+});
 ```
 [see all options](https://www.npmjs.com/package/mysql#connection-options)
 ```javascript
-    console.log(await mysql('select 1 as `col`'));//[{col:1}]
-    console.log(await mysql('select :col as `col`',{col:'user value "`\''}));//[{col:"user value \"`'"}]
-    console.log(await mysql('select '+mysql.escape('user value "`\'')+' as `col`'));//[{col:"user value \"`'"}]
-    mysql('select 1 as `col`',function (error, results, fields){
-        //your code
-    })
+console.log(await mysql('select 1 as `col`'));//[{col:1}]
+console.log(await mysql('select :col as `col`',{col:'user value "`\''}));//[{col:"user value \"`'"}]
+console.log(await mysql('select '+mysql.escape('user value "`\'')+' as `col`'));//[{col:"user value \"`'"}]
+mysql('select 1 as `col`',function (error, results, fields){
+    //your code
+})
 ```
 [see mysql query docs](https://www.npmjs.com/package/mysql#performing-queries)
 
