@@ -2,7 +2,9 @@
 Simply module for connect to mysql with promises
 
 ## Install
+```sh
 npm i https://github.com/utyfua/mysql_promise --save
+```
 
 ## Example
 ```javascript
@@ -43,7 +45,7 @@ Returned promise. He returned array or object(example for insert request).
 ### mysql.destroy()
 Destroy connection
 ### mysql.create()
-See Mysql()
+See [Mysql()](#mysqloptions)
 ### mysql.set_secured(function)
 Set function for hide internal code this module for any.
 ### mysql.set_local_escape(function)
