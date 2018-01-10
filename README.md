@@ -6,6 +6,7 @@ npm i https://github.com/utyfua/mysql_promise --save
 
 ## Example
 ```javascript
+### Create connection
 var Mysql=require('mysql_promise');
 var mysql=await Mysql({
     "host":"127.0.0.1",
@@ -15,6 +16,7 @@ var mysql=await Mysql({
 });
 ```
 [see all options](https://www.npmjs.com/package/mysql#connection-options)
+### Query to db
 ```javascript
 console.log(await mysql('select 1 as `col`'));//[{col:1}]
 console.log(await mysql('select :col as `col`',{col:'user value "`\''}));//[{col:"user value \"`'"}]
