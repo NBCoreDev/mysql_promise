@@ -5,7 +5,7 @@ var connecter=(config)=>{
     connection.on('error', function(q) {
         if(q.code==='PROTOCOL_CONNECTION_LOST'){
             tmp_wait=[];
-            connection=Mysql.createConnection(config);
+            //connection=Mysql.createConnection(config);
             console.debug('mysql reconnect',q)
             return connection.connect(err=>{
                 if(err)throw err;
