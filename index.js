@@ -11,6 +11,7 @@ var connecter=(config)=>{
             connection=Mysql.createConnection(config);
             connection.connect(err=>{
                 if(err)throw err;
+                f_init()
                 tmp_wait.forEach(c=>c());
                 tmp_wait=null;
             });
