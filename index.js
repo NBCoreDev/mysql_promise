@@ -4,21 +4,23 @@ var connecter=(config)=>{
     var tmp_wait;
     var f_err=function(q) {
         if(q.code==='PROTOCOL_CONNECTION_LOST'){
-            tmp_wait=[];
-            //connection=Mysql.createConnection(config);
-            console.debug('mysql reconnect',q);
-            var old_conn=connection;
-            connection=Mysql.createConnection(config);
-            connection.connect(err=>{
-                if(err)throw err;
-                f_init()
-                tmp_wait.forEach(c=>c());
-                tmp_wait=null;
-            });
-            old_conn.destroy();
+            if(!tmp_wait)tmp_wait=[];
+            else if(tmp_wait.length)
+                f_reconn();
             return;
         }
         console.error('mysql global error',q)
+    };
+    var f_reconn=()=>{
+        var old_conn=connection;
+        connection=Mysql.createConnection(config);
+        connection.connect(err=>{
+            if(err)throw err;
+            f_init()
+            tmp_wait.forEach(c=>c());
+            tmp_wait=null;
+        });
+        old_conn.destroy();
     };
     var f_init=()=>{
         connection.on('error', f_err);
@@ -35,8 +37,10 @@ var connecter=(config)=>{
                 return connection.query(...ar)
         }
         return new Promise(resolve=>{
-            if(tmp_wait)tmp_wait.push(resolve);
-            else resolve();
+            if(!tmp_wait)return resolve();
+            tmp_wait.push(resolve);
+            if(tmp_wait.length==1)
+                f_reconn();
         }).then(()=>new Promise(resolve=>{
             ar[ar.length]=(e,r,i)=>{
                 if(e)console.error('mysql',{e,i:{req:ar}})
