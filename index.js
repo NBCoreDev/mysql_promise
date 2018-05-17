@@ -45,7 +45,8 @@ var connecter=(config)=>{
             ar[ar.length]=(e,r,i)=>{
                 if(e)console.error('mysql',{e,i:{req:ar}})
                 if(!r)r=[];
-                //TODO: create prototype mysql response
+                r.error=e;
+                r.fields=i;
                 return resolve(r)
             }
             connection.query(...ar)
