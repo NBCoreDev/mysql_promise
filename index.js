@@ -1,4 +1,4 @@
-var Mysql=require('mysql');
+var Mysql=require('mysql2');
 var connecter=(config)=>{
     var connection=Mysql.createConnection(config);
     var tmp_wait;

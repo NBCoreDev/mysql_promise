@@ -1,6 +1,6 @@
 {
   "name": "mysql_promise",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "main": "index.js",
   "scripts": {
     "test": "make test"
@@ -12,11 +12,15 @@
   "author": "Utyfua",
   "keywords": [
     "mysql",
+    "mysql2",
     "promises"
   ],
   "description": "Simply module for connect to mysql with promises",
-  "dependencies": {
+  "old_dependencies": {
     "mysql": "^2.15.0"
+  },
+  "dependencies": {
+    "mysql2": "^1.5.3"
   },
   "engines": {
     "node":">=8.0.0"
