@@ -66,6 +66,7 @@ var connecter=(config)=>{
             mysqlCC.destroy=secured(()=>connection.destroy());
             mysqlCC.set_secured=ccc=>secured=ccc;
             mysqlCC.set_local_escape=ccc=>local_escape=ccc;
+            mysqlCC.get_connection=()=>connection;
             return mysqlCC;
         });
 }
