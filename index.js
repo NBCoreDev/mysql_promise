@@ -24,8 +24,10 @@ var connecter=(config,module_name)=>{
     };
     var f_init=()=>{
         connection.on('error', f_err);
+		var queryFormat=connection.config.queryFormat;
         connection.config.queryFormat=function(query,values){
             if(!values)return query;
+			if(values.length&&values[0])return queryFormat(query,values);
             return query.replace(/\:(\w+)/g,function (txt,key){
                 return values.hasOwnProperty(key)?mysqlCC.escape(values[key]):txt;
             }.bind(this));};
