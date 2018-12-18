@@ -37,7 +37,7 @@ var connecter=(config,module_name)=>{
 
 						if (match.length === 2) return this.escapeId(values[offset - 1]);
 						else return this.escape(values[offset]);
-					}.bind(this),
+					}.bind(this)
 				);
 			}
 			const escaped = query.replace(
