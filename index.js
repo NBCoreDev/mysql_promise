@@ -46,7 +46,7 @@ var connecter=(config,module_name)=>{
 					if (values.hasOwnProperty(key))
 						return this.escape(values[key]);
 					return text;
-				}.bind(this),
+				}.bind(this)
 			);
 			return escaped.replace(/\[(\w+)\]/g, function(text, key) {
 			if (values.hasOwnProperty(key))
