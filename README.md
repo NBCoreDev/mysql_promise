@@ -3,7 +3,7 @@ Simply module for connect to mysql with promises
 
 ## Install
 ```sh
-npm i https://github.com/utyfua/mysql_promise --save
+npm i @utyfua/mysql_promise --save
 ```
 
 ## Example
