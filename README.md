@@ -9,7 +9,7 @@ npm i @utyfua/mysql_promise --save
 ## Example
 ```javascript
 ### Create connection
-var Mysql=require('mysql_promise');
+var Mysql=require('@utyfua/mysql_promise');
 var mysql=await Mysql({
     "host":"127.0.0.1",
     "user":"user",
